@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'waseemhajwane/docker-demo:latest'  // Change to your Docker Hub username
-        DOCKER_CREDENTIALS = 'dockerhub-credentials'       // Set Jenkins Docker credentials
+        DOCKER_IMAGE = 'waseemhajwane/docker-demo:latest'  // Change this to your Docker Hub username
+        DOCKER_CREDENTIALS = 'dockerhub-credentials'       // Set this in Jenkins credentials
     }
 
     stages {
@@ -45,7 +45,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 echo '🚀 Pushing Docker Image to Docker Hub'
-                withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS}") {
+                withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS}", url: "https://index.docker.io/v1/") {
                     bat 'docker push ${DOCKER_IMAGE}'
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
                 echo '🚀 Deploying Docker Container'
                 bat 'docker stop docker-demo || true'
                 bat 'docker rm docker-demo || true'
-                bat 'docker run -d -p 8081:8080 --name docker-demo ${DOCKER_IMAGE}'
+                bat 'docker run -d -p 8080:8080 --name docker-demo ${DOCKER_IMAGE}'
             }
         }
     }
