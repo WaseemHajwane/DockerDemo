@@ -38,7 +38,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo '🐳 Building Docker Image'
-                bat "docker build -t ${env.DOCKER_IMAGE} ."
+                bat "docker build -t ${env.DOCKER_IMAGE} -f DockerDemo/Dockerfile DockerDemo/"
             }
         }
 
