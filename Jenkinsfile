@@ -17,28 +17,28 @@ pipeline {
         stage('Restore') {
             steps {
                 echo '✅ Restore dependencies'
-                bat 'dotnet restore DockerDemo.sln' // Fixed Path
+                bat 'dotnet restore DockerDemo.sln'
             }
         }
 
         stage('Build') {
             steps {
                 echo '✅ Build application'
-                bat 'dotnet build DockerDemo.sln --configuration Release' // Fixed Path
+                bat 'dotnet build DockerDemo.sln --configuration Release'
             }
         }
 
         stage('Publish') {
             steps {
                 echo '✅ Publish application'
-                bat 'dotnet publish DockerDemo.sln --configuration Release --output ./publish' // Fixed Path
+                bat 'dotnet publish DockerDemo.sln --configuration Release --output ./publish'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo '🐳 Building Docker Image'
-                bat 'docker build -t ${DOCKER_IMAGE} .'
+                bat "docker build -t ${env.DOCKER_IMAGE} ."
             }
         }
 
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 echo '🚀 Pushing Docker Image to Docker Hub'
                 withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS}", url: "https://index.docker.io/v1/") {
-                    bat 'docker push ${DOCKER_IMAGE}'
+                    bat "docker push ${env.DOCKER_IMAGE}"
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
                 echo '🚀 Deploying Docker Container'
                 bat 'docker stop docker-demo || true'
                 bat 'docker rm docker-demo || true'
-                bat 'docker run -d -p 8080:8080 --name docker-demo ${DOCKER_IMAGE}'
+                bat "docker run -d -p 8080:8080 --name docker-demo ${env.DOCKER_IMAGE}"
             }
         }
     }
