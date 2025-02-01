@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'waseemhajwane/docker-demo:latest'  // Change this to your Docker Hub username
-        DOCKER_CREDENTIALS = 'dockerhub-credentials'       // Set this in Jenkins credentials
+        DOCKER_IMAGE = 'waseemhajwane/docker-demo:latest'
+        DOCKER_CREDENTIALS = 'dockerhub-credentials'
     }
 
     stages {
@@ -17,21 +17,21 @@ pipeline {
         stage('Restore') {
             steps {
                 echo '✅ Restore dependencies'
-                bat 'dotnet restore Project/DockerDemo/DockerDemo.sln'
+                bat 'dotnet restore DockerDemo.sln' // Fixed Path
             }
         }
 
         stage('Build') {
             steps {
                 echo '✅ Build application'
-                bat 'dotnet build Project/DockerDemo/DockerDemo.sln --configuration Release'
+                bat 'dotnet build DockerDemo.sln --configuration Release' // Fixed Path
             }
         }
 
         stage('Publish') {
             steps {
                 echo '✅ Publish application'
-                bat 'dotnet publish Project/DockerDemo/DockerDemo.sln --configuration Release --output ./publish'
+                bat 'dotnet publish DockerDemo.sln --configuration Release --output ./publish' // Fixed Path
             }
         }
 
