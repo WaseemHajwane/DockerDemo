@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'waseemhajwane/docker-demo:latest'
-        DOCKER_CREDENTIALS = 'dockerhub-credentials'
+        DOCKER_CREDENTIALS = 'Dockerhub-credentials'
     }
 
     stages {
@@ -45,7 +45,7 @@ pipeline {
         stage('Push to Docker Hub') {
     steps {
         echo '🚀 Pushing Docker Image to Docker Hub'
-        withDockerRegistry(credentialsId: "dockerhub-credentials", url: "https://index.docker.io/v1/") {
+        withDockerRegistry(credentialsId: "Dockerhub-credentials", url: "https://index.docker.io/v1/") {
             bat "docker push ${env.DOCKER_IMAGE}"
         }
     }
