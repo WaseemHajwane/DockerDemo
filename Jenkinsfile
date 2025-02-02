@@ -57,7 +57,7 @@ pipeline {
                 echo '🚀 Deploying Docker Container'
                 bat 'docker stop docker-demo || exit 0'
                 bat 'docker rm docker-demo || exit 0'
-                bat "docker run -d -p 8080:8080 --name docker-demo ${env.DOCKER_IMAGE}"
+                bat "docker run -d -p 8081:8080 --name docker-demo ${env.DOCKER_IMAGE}"
             }
         }
     }
