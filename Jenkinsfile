@@ -46,7 +46,7 @@ pipeline {
             steps {
                 echo '🚀 Pushing Docker Image to Docker Hub'
                 withDockerRegistry(credentialsId: "Dockerhub-credentials", url: "https://index.docker.io/v1/") {
-                    bat """docker login -u waseemhajwane -p <your-access-token>"""
+                    
                     bat """docker push ${env.DOCKER_IMAGE}"""
                 }
             }
