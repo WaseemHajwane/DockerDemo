@@ -43,13 +43,14 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            steps {
-                echo '🚀 Pushing Docker Image to Docker Hub'
-                withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS}", url: "https://index.docker.io/v1/") {
-                    bat "docker push ${env.DOCKER_IMAGE}"
-                }
-            }
+    steps {
+        echo '🚀 Pushing Docker Image to Docker Hub'
+        withDockerRegistry(credentialsId: "dockerhub-credentials", url: "https://index.docker.io/v1/") {
+            bat "docker push ${env.DOCKER_IMAGE}"
         }
+    }
+}
+
 
         stage('Deploy Docker Container') {
             steps {
